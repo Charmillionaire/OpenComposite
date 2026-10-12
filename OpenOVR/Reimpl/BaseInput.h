@@ -364,7 +364,11 @@ public:
 	 */
 	EVRInputError GetBindingVariant(vr::VRInputValueHandle_t ulDevicePath, char* pchVariantArray, uint32_t unVariantArraySize);
 
-public: // INTERNAL FUNCTIONS
+	// OpenVR 2.x additions
+	vr::EVRInputError GetEyeTrackingDataForNextFrame(vr::VRActionHandle_t action, vr::ETrackingUniverseOrigin eOrigin, vr::VREyeTrackingData_t *pEyeTrackingData, uint32_t ulEyeTrackingDataSize);
+	vr::EVRInputError GetEyeTrackingDataRelativeToNow(vr::VRActionHandle_t action, vr::ETrackingUniverseOrigin eOrigin, float fPredictedSecondsFromNow, vr::VREyeTrackingData_t *pEyeTrackingData, uint32_t ulEyeTrackingDataSize);
+
+	public: // INTERNAL FUNCTIONS
 	/**
 	 * Bind all the inputs to the current OpenXR session. This must be called after swapping the session to keep
 	 * the inputs working.
@@ -869,7 +873,5 @@ private:
 	void checkIfActionsMustBeDiscoveredFromSteam();
 	bool triedDiscoveringManifest = false;
 
-	// OpenVR 2.x additions
-	vr::EVRInputError GetEyeTrackingDataForNextFrame(vr::VRActionHandle_t action, vr::ETrackingUniverseOrigin eOrigin, vr::VREyeTrackingData_t *pEyeTrackingData, uint32_t ulEyeTrackingDataSize);
-	vr::EVRInputError GetEyeTrackingDataRelativeToNow(vr::VRActionHandle_t action, vr::ETrackingUniverseOrigin eOrigin, float fPredictedSecondsFromNow, vr::VREyeTrackingData_t *pEyeTrackingData, uint32_t ulEyeTrackingDataSize);
+
 };

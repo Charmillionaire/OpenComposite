@@ -1,3 +1,4 @@
+typedef vr::IVRCompositor_029::EVRCompositorTextureUsage OOVR_EVRCompositorTextureUsage;
 #include "generated/interfaces/IVRCompositor_029.h"
 #pragma once
 #include "../BaseCommon.h" // TODO don't import from OCOVR, and remove the "../"
@@ -367,5 +368,5 @@ public:
 	ovr_enum_t GetPosesForFrame(uint32_t unPosePredictionID, vr::TrackedDevicePose_t* pPoseArray, uint32_t unPoseArrayCount);
 
 	// OpenVR 2.x additions
-	ovr_enum_t GetSubmitTexture(vr::Texture_t *pOutTexture, bool *pNeedsFlush, vr::IVRCompositor_029::EVRCompositorTextureUsage eUsage, const vr::Texture_t *pTexture, const vr::VRTextureBounds_t *pBounds = 0, vr::EVRSubmitFlags nSubmitFlags = vr::Submit_Default);
+	ovr_enum_t GetSubmitTexture(vr::Texture_t *pOutTexture, bool *pNeedsFlush, OOVR_EVRCompositorTextureUsage eUsage, const vr::Texture_t *pTexture, const vr::VRTextureBounds_t *pBounds = 0, vr::EVRSubmitFlags nSubmitFlags = vr::Submit_Default);
 };

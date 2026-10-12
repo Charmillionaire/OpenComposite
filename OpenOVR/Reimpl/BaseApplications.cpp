@@ -177,3 +177,9 @@ uint32_t BaseApplications::GetCurrentSceneProcessId()
 {
 	STUBBED();
 }
+
+vr::EVRApplicationError BaseApplications::RegisterSubprocess(uint32_t nPid)
+{
+	STUBBED();
+	return vr::VRApplicationError_None;
+}
