@@ -1,10 +1,12 @@
-typedef vr::IVRCompositor_029::EVRCompositorTextureUsage OOVR_EVRCompositorTextureUsage;
 #include "generated/interfaces/IVRCompositor_029.h"
 #pragma once
 #include "../BaseCommon.h" // TODO don't import from OCOVR, and remove the "../"
 #include "generated/interfaces/IVRCompositor_022.h"
 
 #include "../Compositor/compositor_backend.h" // TODO don't import from OCOVR, and remove the "../"
+
+// OpenVR 2.x: IVRCompositor_029 引入的新枚举，给 Base 层一个稳定别名
+typedef vr::IVRCompositor_029::EVRCompositorTextureUsage OOVR_EVRCompositorTextureUsage;
 
 #include <vector>
 
