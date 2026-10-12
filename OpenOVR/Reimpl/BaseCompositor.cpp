@@ -602,8 +602,8 @@ ovr_enum_t BaseCompositor::GetPosesForFrame(uint32_t unPosePredictionID, Tracked
 }
 
 
-vr::EVRCompositorError BaseCompositor::GetSubmitTexture(vr::Texture_t *pOutTexture, bool *pNeedsFlush, vr::IVRCompositor_029::EVRCompositorTextureUsage eUsage, const vr::Texture_t *pTexture, const vr::VRTextureBounds_t *pBounds, vr::EVRSubmitFlags nSubmitFlags)
+BaseCompositor::ovr_enum_t BaseCompositor::GetSubmitTexture(vr::Texture_t *pOutTexture, bool *pNeedsFlush, vr::IVRCompositor_029::EVRCompositorTextureUsage eUsage, const vr::Texture_t *pTexture, const vr::VRTextureBounds_t *pBounds, vr::EVRSubmitFlags nSubmitFlags)
 {
 	STUBBED();
-	return vr::VRCompositorError_SharedTexturesNotSupported;
+	return 106; // VRCompositorError_SharedTexturesNotSupported
 }
