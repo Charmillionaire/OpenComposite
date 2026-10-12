@@ -96,6 +96,18 @@ VR_INTERFACE void* VR_CALLTYPE VR_GetGenericInterface(const char* interfaceVersi
 		return NULL;
 	}
 
+	// Hack for Half-Life: Alyx (and other recent SteamVR titles)
+	// IVRIPCResourceManagerClient is an *optional* capability probe: SteamVR uses it for
+	// "zero-copy presentation" (handing swapchains to the app as shared textures instead of
+	// submitting them via IVRCompositor::Submit). Apps are expected to cope when it is absent
+	// and fall back to regular Submit. If we instead abort here, the game dies at startup.
+	// So: report the interface as not found, exactly like the IXrProto_001 case above.
+	if (!strncmp(interfaceVersion, "IVRIPCResourceManagerClient_", strlen("IVRIPCResourceManagerClient_"))) {
+		if (error)
+			*error = VRInitError_Init_InterfaceNotFound;
+		return nullptr;
+	}
+
 	// Hack (kinda) for Vivecraft
 	// They actually used our API! I think they were the only application that ever did so (though only to detect
 	//  if OC was present or not, and it seems that information is no longer used).
