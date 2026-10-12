@@ -592,4 +592,8 @@ public:
 	vr::EVROverlayError SetOverlayPreCurvePitch(vr::VROverlayHandle_t ulOverlayHandle, float fRadians);
 	vr::EVROverlayError GetOverlayPreCurvePitch(vr::VROverlayHandle_t ulOverlayHandle, float* pfRadians);
 	vr::EVROverlayError WaitFrameSync(uint32_t nTimeoutMs);
+
+	// OpenVR 2.x additions
+	vr::EVROverlayError CreateSubviewOverlay(vr::VROverlayHandle_t parentOverlayHandle, const char *pchSubviewOverlayKey, const char *pchSubviewOverlayName, vr::VROverlayHandle_t *pSubviewOverlayHandle);
+	vr::EVROverlayError SetSubviewPosition(vr::VROverlayHandle_t ulOverlayHandle, float fX, float fY);
 };

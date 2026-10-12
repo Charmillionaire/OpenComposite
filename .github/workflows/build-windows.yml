@@ -1,0 +1,56 @@
+name: Build Windows OpenComposite DLLs
+
+on:
+  push:
+    branches: [openxr, main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [x64, Win32]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Download Vulkan minimal SDK
+        shell: pwsh
+        run: |
+          $url = "https://znix.xyz/random/vulkan-1.1.85.0-minisdk.7z"
+          Invoke-WebRequest -Uri $url -OutFile vulkan-sdk.7z -UseBasicParsing
+          7z x -olibs vulkan-sdk.7z
+
+      - name: Configure CMake
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path build | Out-Null
+          cd build
+          cmake .. -A ${{ matrix.platform }}
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+
+      - name: Build
+        shell: pwsh
+        run: |
+          cmake --build build --config Release --target OCOVR --parallel
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+
+      - name: Upload artifact (DLL)
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenComposite-${{ matrix.platform }}
+          path: |
+            build/bin/Release/*.dll
+            build/bin/*.dll
+          if-no-files-found: warn

@@ -1,3 +1,4 @@
+#include "generated/interfaces/public_vrtypes.h"
 #pragma once
 
 // Make this usable from DrvOpenXR to refresh the inputs after swapping sessions
@@ -867,4 +868,8 @@ private:
 	 */
 	void checkIfActionsMustBeDiscoveredFromSteam();
 	bool triedDiscoveringManifest = false;
+
+	// OpenVR 2.x additions
+	vr::EVRInputError GetEyeTrackingDataForNextFrame(vr::VRActionHandle_t action, vr::ETrackingUniverseOrigin eOrigin, vr::VREyeTrackingData_t *pEyeTrackingData, uint32_t ulEyeTrackingDataSize);
+	vr::EVRInputError GetEyeTrackingDataRelativeToNow(vr::VRActionHandle_t action, vr::ETrackingUniverseOrigin eOrigin, float fPredictedSecondsFromNow, vr::VREyeTrackingData_t *pEyeTrackingData, uint32_t ulEyeTrackingDataSize);
 };
