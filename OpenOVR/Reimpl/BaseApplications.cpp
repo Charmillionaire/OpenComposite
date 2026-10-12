@@ -180,6 +180,7 @@ uint32_t BaseApplications::GetCurrentSceneProcessId()
 
 BaseApplications::EVRApplicationError BaseApplications::RegisterSubprocess(uint32_t nPid)
 {
-	STUBBED();
+	// 告知"注册成功"，避免打断游戏的多进程启动流程
+	OOVR_LOGF("RegisterSubprocess(pid=%u) - accepted", nPid);
 	return VRApplicationError_None;
 }

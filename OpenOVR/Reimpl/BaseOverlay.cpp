@@ -977,12 +977,14 @@ EVROverlayError BaseOverlay::WaitFrameSync(uint32_t nTimeoutMs)
 
 vr::EVROverlayError BaseOverlay::CreateSubviewOverlay(vr::VROverlayHandle_t parentOverlayHandle, const char *pchSubviewOverlayKey, const char *pchSubviewOverlayName, vr::VROverlayHandle_t *pSubviewOverlayHandle)
 {
-	STUBBED();
+	// 不支持子 overlay，如实返回错误码（不能 ABORT，否则会中断游戏）
+	OOVR_LOG_ONCE("CreateSubviewOverlay not supported");
+	if (pSubviewOverlayHandle) *pSubviewOverlayHandle = vr::k_ulOverlayHandleInvalid;
 	return vr::VROverlayError_InvalidParameter;
 }
 
 vr::EVROverlayError BaseOverlay::SetSubviewPosition(vr::VROverlayHandle_t ulOverlayHandle, float fX, float fY)
 {
-	STUBBED();
+	OOVR_LOG_ONCE("SetSubviewPosition not supported");
 	return vr::VROverlayError_InvalidParameter;
 }

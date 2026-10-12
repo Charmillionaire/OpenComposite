@@ -879,30 +879,39 @@ void BaseSystem::ResetSeatedZeroPose()
 
 bool BaseSystem::ComputeDistortionSet(vr::EVREye eEye, vr::EVRDistortionChannel eChannel, bool bAsNormalizedDeviceCoordinates, uint32_t nNumCoordinates, const vr::DistortionCoordinate_t *pInput, vr::DistortionCoordinate_t *pOutput)
 {
-	STUBBED();
+	// OpenComposite 不做自定义畸变校正，直接告知调用方"本组坐标不适用"
+	OOVR_LOG_ONCE("ComputeDistortionSet not implemented - returning false");
 	return false;
 }
 
 bool BaseSystem::GetEyeTrackedFoveationCenter(vr::HmdVector2_t *pNdcLeft, vr::HmdVector2_t *pNdcRight)
 {
-	STUBBED();
+	// 无眼动追踪支持：返回零向量并告知不可用
+	if (pNdcLeft) { pNdcLeft->v[0] = 0.0f; pNdcLeft->v[1] = 0.0f; }
+	if (pNdcRight) { pNdcRight->v[0] = 0.0f; pNdcRight->v[1] = 0.0f; }
+	OOVR_LOG_ONCE("GetEyeTrackedFoveationCenter not implemented");
 	return false;
 }
 
 bool BaseSystem::GetEyeTrackedFoveationCenterForProjection(const vr::HmdMatrix44_t *pProjMat, vr::HmdVector2_t *pNdc)
 {
-	STUBBED();
+	if (pNdc) { pNdc->v[0] = 0.0f; pNdc->v[1] = 0.0f; }
+	OOVR_LOG_ONCE("GetEyeTrackedFoveationCenterForProjection not implemented");
 	return false;
 }
 
 bool BaseSystem::PollNextEventWithPoseAndOverlays(vr::ETrackingUniverseOrigin eOrigin, vr::VREvent_t *pEvent, uint32_t uncbVREvent, vr::TrackedDevicePose_t *pTrackedDevicePose, vr::VROverlayHandle_t *pulOverlayHandle)
 {
-	STUBBED();
-	return false;
+	// 新版多了 overlay handle 出参，我们暂不提供，退化为普通轮询
+	if (pulOverlayHandle != nullptr)
+		*pulOverlayHandle = vr::k_ulOverlayHandleInvalid;
+	return PollNextEventWithPose(eOrigin, pEvent, uncbVREvent, pTrackedDevicePose);
 }
 
 vr::EVRInitError BaseSystem::SetSDKVersion(uint32_t nVersionMajor, uint32_t nVersionMinor, uint32_t nVersionBuild)
 {
-	STUBBED();
+	// 游戏用它告知期望的 SDK 版本；我们无需据此做任何事，静默接受即可。
+	// 注意：绝不能 STUBBED()（会 ABORT 弹窗中断游戏启动）
+	OOVR_LOGF("SetSDKVersion(%u.%u.%u) - ignored", nVersionMajor, nVersionMinor, nVersionBuild);
 	return vr::VRInitError_None;
 }

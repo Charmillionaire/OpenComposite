@@ -604,6 +604,8 @@ ovr_enum_t BaseCompositor::GetPosesForFrame(uint32_t unPosePredictionID, Tracked
 
 BaseCompositor::ovr_enum_t BaseCompositor::GetSubmitTexture(vr::Texture_t *pOutTexture, bool *pNeedsFlush, OOVR_EVRCompositorTextureUsage eUsage, const vr::Texture_t *pTexture, const vr::VRTextureBounds_t *pBounds, vr::EVRSubmitFlags nSubmitFlags)
 {
-	STUBBED();
+	// 我们无法把纹理交回给调用方共享，如实返回错误码即可（不能 ABORT）
+	OOVR_LOG_ONCE("GetSubmitTexture not supported");
+	if (pNeedsFlush) *pNeedsFlush = false;
 	return 106; // VRCompositorError_SharedTexturesNotSupported
 }
